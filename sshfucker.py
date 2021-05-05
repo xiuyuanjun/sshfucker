@@ -16,7 +16,7 @@ class SSHThread(threading.Thread):
         print("Start try ssh => %s" % self.ip)
         username = "root"
         try:
-            password = open(self.dict).read().split('\n')
+            password = set(open(self.dict).read().split('\n'))
         except:
             print("Open dict file `%s` error" % self.dict)
             exit(1)
@@ -40,11 +40,11 @@ def main(ipFile, dic, log):
     if ipFile == "-h":
         help()
     try:
-        ipText = open(ipFile).read().split('\n')
+        ipText = set(open(ipFile).read().split('\n'))
         for ip in ipText:
             if ip != '':
                 time.sleep(0.5)
-                threading.Thread(target = ViolenceSSH, args = (ip, 22, 1, dic, log, )).start()
+                threading.Thread(target = ViolenceSSH, args = (ip, 22, 5, dic, log, )).start()
     except:
         print("Open IP list file `%s` error" % ipFile)
         exit(1)
